@@ -3,11 +3,13 @@ import { Simulator } from './components/Simulator';
 import { ControlPanel } from './components/ControlPanel';
 import { StatsPanel } from './components/StatsPanel';
 import { ModelManager } from './components/ModelManager';
+import WelcomePage from './components/WelcomePage';
 import { Toaster } from './components/ui/sonner';
 import { toast } from 'sonner';
 import { Brain, Zap } from 'lucide-react';
 
 function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
   const [isRunning, setIsRunning] = useState(true);
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [populationSize, setPopulationSize] = useState(100);
@@ -48,6 +50,10 @@ function App() {
     });
   };
 
+  if (showWelcome) {
+    return <WelcomePage onStart={() => setShowWelcome(false)} />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Toaster position="top-right" theme="dark" />
@@ -69,9 +75,17 @@ function App() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/30 border border-primary/30">
-              <Zap className="h-4 w-4 text-primary animate-pulse-glow" />
-              <span className="text-sm font-medium text-primary">Live Training</span>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => setShowWelcome(true)}
+                className="px-4 py-2 rounded-lg bg-secondary/20 border border-secondary/30 text-sm font-medium text-secondary hover:bg-secondary/30 transition-colors"
+              >
+                Back to Home
+              </button>
+              <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-muted/30 border border-primary/30">
+                <Zap className="h-4 w-4 text-primary animate-pulse-glow" />
+                <span className="text-sm font-medium text-primary">Live Training</span>
+              </div>
             </div>
           </div>
         </div>
